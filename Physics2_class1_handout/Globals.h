@@ -5,9 +5,11 @@
 #define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
 void log(const char file[], int line, const char* format, ...);
 
-#define METERS_TO_PIXELS(meters) { (int)(meters / 10.0f) }
+#define PIXEL_METER_RELATION 0.25f
 
-#define PIXELS_TO_METERS(pixels) { (float32)(pixels * 10.0f) }
+#define METERS_TO_PIXELS(meters) { (int)(meters / PIXEL_METER_RELATION) }
+
+#define PIXELS_TO_METERS(pixels) { (float32)(pixels * PIXEL_METER_RELATION) }
 
 
 #define CAP(n) ((n <= 0.0f) ? n=0.0f : (n >= 1.0f) ? n=1.0f : n=n)
