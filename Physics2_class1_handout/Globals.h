@@ -7,7 +7,7 @@ void log(const char file[], int line, const char* format, ...);
 
 #define METERS_TO_PIXELS(meters) { (int)(meters / 10.0f) }
 
-#define PIXELS_TO_METERS(pixels) { (int)(pixels * 10.0f) }
+#define PIXELS_TO_METERS(pixels) { (float32)(pixels * 10.0f) }
 
 
 #define CAP(n) ((n <= 0.0f) ? n=0.0f : (n >= 1.0f) ? n=1.0f : n=n)

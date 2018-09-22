@@ -14,7 +14,7 @@
 ModulePhysics::ModulePhysics(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	debug = true;
-	b2Vec2 gravity(0.0f, -10.0f);
+	b2Vec2 gravity(0.0f, 9.8f);
 	world = new b2World(gravity);
 }
 
@@ -36,12 +36,12 @@ bool ModulePhysics::Start()
 	//1. Define a body with position, damping, etc.
 	b2BodyDef groundBodyDef;
 	groundBodyDef.type = b2_staticBody;
-	groundBodyDef.position.Set(PIXELS_TO_METERS(100), PIXELS_TO_METERS(100));
+	groundBodyDef.position.Set(PIXELS_TO_METERS(SCREEN_WIDTH / 2), PIXELS_TO_METERS(SCREEN_HEIGHT / 2));
 	//2. Use the world object to create the body
 	b2Body* groundBody = world->CreateBody(&groundBodyDef);
 	//3. Define fixtures with a shape, friction, density, etc.
 	b2CircleShape groundShape;
-	groundShape.m_radius = PIXELS_TO_METERS(50);
+	groundShape.m_radius = PIXELS_TO_METERS(200);
 	//4. Create fixtures on the body
 	b2FixtureDef groundFixture;
 	groundFixture.shape = &groundShape;
@@ -65,6 +65,21 @@ update_status ModulePhysics::PostUpdate()
 {
 	// TODO 5: On space bar press, create a circle on mouse position
 	// - You need to transform the position / radius
+	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN){
+		//1. Define a body with position, damping, etc.
+		b2BodyDef bodyDef;
+		bodyDef.type = b2_dynamicBody;
+		bodyDef.position.Set(PIXELS_TO_METERS(App->input->GetMouseX()), PIXELS_TO_METERS(App->input->GetMouseY()));
+		//2. Use the world object to create the body
+		b2Body* body = world->CreateBody(&bodyDef);
+		//3. Define fixtures with a shape, friction, density, etc.
+		b2CircleShape shape;
+		shape.m_radius = PIXELS_TO_METERS(20);
+		//4. Create fixtures on the body
+		b2FixtureDef fixture;
+		fixture.shape = &shape;
+		body->CreateFixture(&fixture);
+	}
 
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
