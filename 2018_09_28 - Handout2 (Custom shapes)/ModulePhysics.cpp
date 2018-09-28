@@ -101,26 +101,48 @@ update_status ModulePhysics::PostUpdate()
 	{
 		// TODO 2: Create a chain shape using those vertices
 		// remember to convert them from pixels to meters!
-		int points[24] = {
-			-38, 80,
-			-44, -54,
-			-16, -60,
-			-16, -17,
-			19, -19,
-			19, -79,
-			61, -77,
-			57, 73,
-			17, 78,
-			20, 16,
-			-25, 13,
-			-9, 72
+		int rick_head[66] = {
+			43, 38,
+			14, 36,
+			29, 62,
+			0, 76,
+			28, 90,
+			9, 102,
+			31, 115,
+			23, 124,
+			39, 126,
+			34, 136,
+			44, 132,
+			53, 142,
+			66, 147,
+			81, 148,
+			94, 138,
+			98, 126,
+			104, 125,
+			105, 120,
+			100, 116,
+			102, 104,
+			110, 100,
+			104, 94,
+			109, 87,
+			109, 76,
+			115, 67,
+			105, 61,
+			111, 34,
+			94, 39,
+			93, 20,
+			87, 4,
+			84, 19,
+			75, 32,
+			41, 0
 		};
 
-		b2Vec2* vecArr = new b2Vec2[12];
+
+		b2Vec2* vecArr = new b2Vec2[33];
 		int j = 0;
-		for (int i = 0; i < 12; i++) {
-			vecArr[i].x = PIXEL_TO_METERS(points[j++]);
-			vecArr[i].y = PIXEL_TO_METERS(points[j++]);
+		for (int i = 0; i < 33; i++) {
+			vecArr[i].x = PIXEL_TO_METERS(rick_head[j++]);
+			vecArr[i].y = PIXEL_TO_METERS(rick_head[j++]);
 		}
 
 		b2BodyDef body;
@@ -129,7 +151,7 @@ update_status ModulePhysics::PostUpdate()
 		b2Body* b = world->CreateBody(&body);
 
 		b2ChainShape chain;
-		chain.CreateLoop(vecArr, 12);
+		chain.CreateLoop(vecArr, 33);
 
 		b2FixtureDef fixture;
 		fixture.shape = &chain;
