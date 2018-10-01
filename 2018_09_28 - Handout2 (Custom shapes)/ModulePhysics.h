@@ -46,9 +46,11 @@ public:
 	PhysBody *CreateCircle();
 	PhysBody *CreateSquare();
 	PhysBody *CreateRickHead();
+
+	std::list<PhysBody*> physicsBody;
 private:
 
 	bool debug;
 	b2World* world;
-	std::list<PhysBody> physicsBody;
+	
 };
