@@ -168,7 +168,9 @@ PhysBody* ModulePhysics::CreateCircle() {
 	fixture.shape = &shape;
 	b->CreateFixture(&fixture);
 
-	physicsBody.push_back();
+	PhysBody bodyToAdd (b);
+	physicsBody.push_back(bodyToAdd);
+	return &bodyToAdd;
 }
 
 PhysBody* ModulePhysics::CreateSquare() {
@@ -185,6 +187,10 @@ PhysBody* ModulePhysics::CreateSquare() {
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
 	b->CreateFixture(&fixture);
+
+	PhysBody bodyToAdd(b);
+	physicsBody.push_back(bodyToAdd);
+	return &bodyToAdd;
 }
 
 PhysBody* ModulePhysics::CreateRickHead() {
@@ -245,6 +251,10 @@ PhysBody* ModulePhysics::CreateRickHead() {
 	b2FixtureDef fixture;
 	fixture.shape = &chain;
 	b->CreateFixture(&fixture);
+
+	PhysBody bodyToAdd(b);
+	physicsBody.push_back(bodyToAdd);
+	return &bodyToAdd;
 }
 
 //Physbody methods

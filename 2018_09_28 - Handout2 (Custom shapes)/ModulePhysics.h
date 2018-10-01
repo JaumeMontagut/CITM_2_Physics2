@@ -25,6 +25,8 @@ class PhysBody {
 private:
 	b2Body* body;
 public:
+	PhysBody(b2Body * body);
+
 	p2Point<float> GetPosition();
 };
 
