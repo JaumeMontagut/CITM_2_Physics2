@@ -16,6 +16,7 @@ public:
 	bool CleanUp();
 
 public:
+	p2List<PhysBody*> circles;
 
 	SDL_Texture* circle;
 	SDL_Texture* box;

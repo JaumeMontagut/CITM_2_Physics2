@@ -154,25 +154,25 @@ bool ModulePhysics::CleanUp()
 	return true;
 }
 
-PhysBody* ModulePhysics::CreateCircle() {
+PhysBody* ModulePhysics::CreateCircle(float sentRadius) {
 	b2BodyDef body;
 	body.type = b2_dynamicBody;
 	body.position.Set(PIXEL_TO_METERS(App->input->GetMouseX()), PIXEL_TO_METERS(App->input->GetMouseY()));
 	b2Body* b = world->CreateBody(&body);
 
-	float radius = PIXEL_TO_METERS(25);
+	float radius = PIXEL_TO_METERS(sentRadius);
 	b2CircleShape shape;
-	shape.m_radius = radius;
+	shape.m_radius = PIXEL_TO_METERS(sentRadius);
 
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
 	b->CreateFixture(&fixture);
 
-	PhysBody* bodyToAdd = new PhysBody(b);
+	PhysBody* bodyToAdd = new PhysBody(b, sentRadius, sentRadius);
 	return bodyToAdd;
 }
 
-PhysBody* ModulePhysics::CreateSquare() {
+PhysBody* ModulePhysics::CreateSquare(float width, float height) {
 	// TODO 1: When pressing 2, create a box on the mouse position
 	// To have the box behave normally, set fixture's density to 1.0f
 	b2BodyDef body;
@@ -180,14 +180,14 @@ PhysBody* ModulePhysics::CreateSquare() {
 	body.position.Set(PIXEL_TO_METERS(App->input->GetMouseX()), PIXEL_TO_METERS(App->input->GetMouseY()));
 
 	b2PolygonShape shape;
-	shape.SetAsBox(PIXEL_TO_METERS(20.0f), PIXEL_TO_METERS(20.0f));
+	shape.SetAsBox(PIXEL_TO_METERS(width), PIXEL_TO_METERS(height));
 
 	b2Body* b = world->CreateBody(&body);
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
 	b->CreateFixture(&fixture);
 
-	PhysBody* bodyToAdd = new PhysBody(b);
+	PhysBody* bodyToAdd = new PhysBody(b, width, height);//Change this values to the correct ones
 	return bodyToAdd;
 }
 
@@ -250,16 +250,20 @@ PhysBody* ModulePhysics::CreateRickHead() {
 	fixture.shape = &chain;
 	b->CreateFixture(&fixture);
 
-	PhysBody* bodyToAdd = new PhysBody(b);
+	PhysBody* bodyToAdd = new PhysBody(b, 0, 0);//Change this values to the correct ones
 	return bodyToAdd;
 }
 
 //Physbody methods
-PhysBody::PhysBody(b2Body *body) :body(body) {};
+PhysBody::PhysBody(b2Body *body, int width, int height) :body(body), width(width), height(height) {};
 
-p2Point<float> PhysBody::GetPosition(){
-	p2Point<float> point;
-	point.x = body->GetPosition().x;
-	point.y = body->GetPosition().y;
-	return point;
+p2Point<float> PhysBody::GetPosition() const{
+	p2Point<float> pos;
+	pos.x = METERS_TO_PIXELS(body->GetPosition().x) - width;
+	pos.y = METERS_TO_PIXELS(body->GetPosition().y) - height;
+	return pos;
+}
+
+float PhysBody::GetRotation() const {
+	return RADTODEG * body->GetAngle();
 }

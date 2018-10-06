@@ -2,7 +2,6 @@
 #include "Module.h"
 #include "Globals.h"
 #include "p2Point.h"
-#include <list>
 
 #define GRAVITY_X 0.0f
 #define GRAVITY_Y -7.0f
@@ -24,10 +23,12 @@ class b2Body;
 class PhysBody {
 private:
 	b2Body* body;
+	int width, height;
 public:
-	PhysBody(b2Body * body);
+	PhysBody(b2Body * body, int width, int height);
 
-	p2Point<float> GetPosition();
+	p2Point<float> GetPosition() const;
+	float GetRotation() const;
 };
 
 
@@ -43,11 +44,10 @@ public:
 	bool CleanUp();
 
 	// TODO 3: Move body creation to 3 functions to create circles, rectangles and chains
-	PhysBody *CreateCircle();
-	PhysBody *CreateSquare();
+	PhysBody *CreateCircle(float radius);
+	PhysBody *CreateSquare(float width, float height);
 	PhysBody *CreateRickHead();
 
-	std::list<PhysBody*> physicsBody;
 private:
 
 	bool debug;

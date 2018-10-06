@@ -5,7 +5,6 @@
 #include "ModuleInput.h"
 #include "ModuleTextures.h"
 #include "ModulePhysics.h"
-#include <list>
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -44,12 +43,12 @@ update_status ModuleSceneIntro::Update()
 	// TODO 4: Move all creation of bodies on 1,2,3 key press here in the scene
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		App->physics->physicsBody.push_back(App->physics->CreateCircle());
+		App->scene_intro->circles.add(App->physics->CreateCircle(25));
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{
-		App->physics->CreateSquare();
+		App->physics->CreateSquare(20, 20);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
@@ -57,10 +56,10 @@ update_status ModuleSceneIntro::Update()
 		App->physics->CreateRickHead();
 	}
 	// TODO 6: Draw all the circles using "circle" texture
-	SDL_Texture* circleTx = App->textures->Load("pinball/wheel.png");
-	for (std::list<PhysBody>::iterator iterator = App->physics->physicsBody.begin(); iterator != App->physics->physicsBody.end(); iterator++) {
-		App->renderer->Blit(circleTx,iterator->GetPosition().x, iterator->GetPosition().y);
+
+	for (p2List_item<PhysBody*>* iterator = circles.getFirst(); iterator != NULL; iterator = iterator->next) {
+		p2Point<float> pos = iterator->data->GetPosition();
+		App->renderer->Blit(circle, pos.x, pos.y, NULL, 1.0f, iterator->data->GetRotation());
 	}
-	App->textures->Unload(circleTx);
 	return UPDATE_CONTINUE;
 }
