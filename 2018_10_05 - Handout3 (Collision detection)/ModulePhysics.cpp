@@ -262,9 +262,9 @@ bool PhysBody::Contains(int x, int y) const
 	// TODO 1: Write the code to return true in case the point
 	// is inside ANY of the shapes contained by this body
 	//Fixture is like an advanced version of the shapes
-	b2Vec2 point(x, y);
+	b2Vec2 testPoint(x, y);
 	for (b2Fixture* fixture = body->GetFixtureList(); fixture != NULL; fixture = fixture->GetNext()) {
-		if (fixture->TestPoint(point)) {
+		if (fixture->TestPoint(testPoint)) {
 			return true;
 		}
 	}
@@ -276,20 +276,8 @@ int PhysBody::RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& no
 	// TODO 2: Write code to test a ray cast between both points provided. If not hit return -1
 	// if hit, fill normal_x and normal_y and return the distance between x1,y1 and its colliding point
 	int ret = -1;
-	b2RayCastInput input;
-	input.p1.Set(x1, y1);
-	input.p2.Set(x2, y2);
-	input.maxFraction = 1.0f;//CHANGE: It should be a value that we pass in
-	int32 childIndex = 0;
-	b2RayCastOutput output;
-	for (b2Fixture* fixture = body->GetFixtureList(); fixture != NULL; fixture = fixture->GetNext()) {
-		if (fixture->RayCast(&output, input, childIndex)) {
-			normal_x = output.normal.x;
-			normal_y = output.normal.y;
-			return output.fraction * sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-		}
-	}
-	return -1;
+
+	return ret;
 }
 
 // TODO 3
