@@ -150,7 +150,7 @@ public:
 		btScalar			m_additionalAngularDampingFactor;
 
 		btRigidBodyConstructionInfo(	btScalar mass, btMotionState* motionState, btCollisionShape* collisionShape, const btVector3& localInertia=btVector3(0,0,0)):
-		m_mass(mass),
+			m_mass(mass),
 			m_motionState(motionState),
 			m_collisionShape(collisionShape),
 			m_localInertia(localInertia),

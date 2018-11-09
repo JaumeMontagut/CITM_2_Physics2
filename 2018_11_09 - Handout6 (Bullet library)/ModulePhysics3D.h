@@ -3,8 +3,13 @@
 #include "Globals.h"
 #include "p2List.h"
 #include "Primitive.h"
+#include "glmath.h"
 
 // TODO 1: Add Bullet common include btBulletDynamicsCommon.h
+#include "Bullet/include/btBulletCollisionCommon.h"
+#include "Bullet/include/btBulletDynamicsCommon.h"
+
+#define GRAVITY -9.8
 
 class DebugDrawer;
 
@@ -25,9 +30,16 @@ private:
 	bool debug;
 
 	DebugDrawer* debug_draw;
+
+	btCollisionDispatcher * dispatcher = nullptr;
+	btBroadphaseInterface * pairCache = nullptr;
+	btConstraintSolver * constraintSolver = nullptr;
+	btCollisionConfiguration * collisionConfiguration = nullptr;
+
+	btDiscreteDynamicsWorld * world = nullptr;
 };
 
-/*
+
 // Uncomment the debug Drawer once you finish TODO 4
 class DebugDrawer : public btIDebugDraw
 {
@@ -46,4 +58,3 @@ public:
 	Line line;
 	Primitive point;
 };
-*/
